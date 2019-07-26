@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Daily Notes</string>
+    <string name="action_settings">Settings</string>
+    <string name="sample_title">Sample text for the title of this news</string>
+    <string name="time_text">39 minutes ago</string>
+    <string name="title">What do you want say?</string>
+    <string name="description">More details about your note </string>
+    <string name="sample_description">This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news.</string>
+</resources>
