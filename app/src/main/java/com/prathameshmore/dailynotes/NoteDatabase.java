@@ -29,7 +29,7 @@ public abstract class NoteDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            //new PopulateDbAsyncTask(instance).execute();
+           // new PopulateDbAsyncTask(instance).execute();
         }
     };
 
@@ -43,17 +43,14 @@ public abstract class NoteDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            notesDao.insert(new Note("Title", "3 minutes ago", "New added", 2));
-            notesDao.insert(new Note("Sample text for the title of this news", "20 hours ago", "This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news."
+            notesDao.insert(new Note("Samsung Galaxy Note 10 release date, price, news and leaks", "3 minutes ago", "The Samsung Galaxy Note 10 needs to seriously impress consumers to hold folks' attention, and we're hearing plenty of Galaxy Note 10 leaks and rumors suggesting it might just pull that off.\n" +
+                    "\n" +
+                    "We've even seen the Galaxy Note 10 name on an image at Samsung's Korean campus, and heard Samsung CEO DJ Koh name-drop the soon-to-be-announced handset during a round-table interview.", 2));
+            notesDao.insert(new Note("San Francisco Travel Plans", "20 hours ago", "San Francisco's top attractions include Fisherman's Wharf, Pier 39, Ghirardelli Square, Alcatraz, the Golden Gate Bridge, cable cars, Chinatown, Lombard Street and Golden Gate Park. You can see where they all are on the map of San Francisco attractions above."
             ,2));
-            notesDao.insert(new Note("Sample text for the title of this news", "20 hours ago", "This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news."
-                    ,2));
-            notesDao.insert(new Note("Sample text for the title of this news", "20 hours ago", "This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news."
-                    ,2));
-            notesDao.insert(new Note("Sample text for the title of this news", "20 hours ago", "This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news."
-                    ,2));
-            notesDao.insert(new Note("Sample text for the title of this news", "20 hours ago", "This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news."
-                    ,2));
+            notesDao.insert(new Note("'Lover' New Album by Taylor Swift", "20 hours ago", "Taylor Swift has announced her seventh studio album: Lover. It comes out August 23 via Republic. Lover includes Taylor Swift's latest single “ME!,” as well as a new track titled “You Need to Calm Down.” The new album is Taylor's follow-up to 2017's reputation.",
+                    1));
+
             return null;
         }
     }

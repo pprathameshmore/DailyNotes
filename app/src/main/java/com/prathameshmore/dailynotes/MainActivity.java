@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText inputEditTextTitle, inputEditTextDescription;
     private NoteViewModel noteViewModel;
     private Vibrator vibrator;
+    private AlertDialog.Builder deleteBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_todo);
+        deleteBuilder = new AlertDialog.Builder(MainActivity.this);
+
+        final RecyclerView recyclerView = findViewById(R.id.recycler_view_todo);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
@@ -71,9 +74,30 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                noteViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(MainActivity.this, R.string.toast_delete, Toast.LENGTH_SHORT).show();
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+
+                deleteBuilder.setMessage(R.string.delete_title).setTitle(R.string.warning_delete).setCancelable(false).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        noteViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
+                        Toast.makeText(MainActivity.this, R.string.toast_delete, Toast.LENGTH_SHORT).show();
+                    }
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MainActivity.this, R.string.cancel_btn, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog alertDialog = deleteBuilder.create();
+                alertDialog.show();
+                noteViewModel.getAllNotes().observe(MainActivity.this, new Observer<List<Note>>() {
+                    @Override
+                    public void onChanged(List<Note> notes) {
+                        adapter.setNotes(notes);
+                    }
+                });
+
                /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator.vibrate(1);
                 } else {
@@ -115,14 +139,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (id == R.id.action_delete_all) {
+            final AlertDialog.Builder delete = new AlertDialog.Builder(this);
+            delete.setMessage(R.string.delete_title).setTitle(R.string.warning_delete_all).setCancelable(false).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    noteViewModel.deleteAll();
+                    Toast.makeText(MainActivity.this, R.string.toast_all_delete, Toast.LENGTH_SHORT).show();
+                }
+            }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
 
-            if (noteViewModel.getAllNotes() == null) {
-                item.setEnabled(false);
-            } else {
-                noteViewModel.deleteAll();
-                Toast.makeText(this, R.string.toast_all_delete, Toast.LENGTH_SHORT).show();
-                return true;
-            }
+                }
+            });
+            AlertDialog alertDialog = delete.create();
+            alertDialog.show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -200,13 +232,14 @@ public class MainActivity extends AppCompatActivity {
                     Note note = new Note(title, "1",description,1);
                     note.setId(id);
                     noteViewModel.update(note);
+                    Toast.makeText(MainActivity.this, R.string.toast_note_updated, Toast.LENGTH_SHORT).show();
                 }
 
             }
         }).setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(MainActivity.this, R.string.note_discarded, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.toast_no_changes, Toast.LENGTH_SHORT).show();
                 dialogInterface.dismiss();
             }
         });
