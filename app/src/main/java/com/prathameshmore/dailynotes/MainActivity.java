@@ -82,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
+        adapter.setOnClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+                showDialog(note);
+                //Toast.makeText(MainActivity.this, note.getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +154,52 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     NoteViewModel noteViewModel = new NoteViewModel(getApplication());
                     noteViewModel.insert(new Note(title, "1", description, 1));
+                }
+
+            }
+        }).setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, R.string.note_discarded, Toast.LENGTH_SHORT).show();
+                dialogInterface.dismiss();
+            }
+        });
+        alertBuilder.setCancelable(false);
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+    }
+
+    private void showDialog(final Note noteData) {
+        ViewGroup viewGroup = findViewById(R.id.content);
+        final View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_input_note, viewGroup, false);
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        layoutTitle = dialogView.findViewById(R.id.textInputTitle);
+        layoutDescription = dialogView.findViewById(R.id.textInputDescription);
+
+        inputEditTextTitle = dialogView.findViewById(R.id.editTextTitle);
+        inputEditTextDescription = dialogView.findViewById(R.id.editTextDescription);
+
+        inputEditTextTitle.setText(noteData.getTitle());
+        inputEditTextDescription.setText(noteData.getDescription());
+        final int id = noteData.getId();
+        //etTitle.addTextChangedListener(new NoteValidator(etTitle));
+        //etDescription.addTextChangedListener(new NoteValidator(etDescription));
+
+        alertBuilder.setView(dialogView).setPositiveButton(R.string.save_btn, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Toast.makeText(MainActivity.this, "Save", Toast.LENGTH_SHORT).show();
+                title = inputEditTextTitle.getText().toString().trim();
+                description = inputEditTextDescription.getText().toString().trim();
+
+                if (title.trim().isEmpty() || description.trim().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Enter required fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    NoteViewModel noteViewModel = new NoteViewModel(getApplication());
+                    Note note = new Note(title, "1",description,1);
+                    note.setId(id);
+                    noteViewModel.update(note);
                 }
 
             }
