@@ -33,7 +33,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
         holder.textDescription.setText(note.getDescription());
     }
 
-
     @Override
     public int getItemCount() {
         return notes.size();
@@ -42,6 +41,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public void setNotes(List<Note> notes) {
         this.notes = notes;
         notifyDataSetChanged();
+    }
+
+    public Note getNoteAt(int position) {
+        return notes.get(position);
     }
     class NoteHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
