@@ -1,13 +1,20 @@
 package com.prathameshmore.dailynotes;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.prathameshmore.dailynotes.models.Note;
 import com.prathameshmore.toastylibrary.Toasty;
 
@@ -48,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private Vibrator vibrator;
     private AlertDialog.Builder deleteBuilder;
     private Toasty toasty;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +65,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         toasty = new Toasty(this);
+
+        MobileAds.initialize(this, "ca-app-pub-9370043571819984~8956283764");
+        adView = findViewById(R.id.adView);
+        adView.setAdUnitId("ca-app-pub-9370043571819984/8381568698");
+
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         deleteBuilder = new AlertDialog.Builder(MainActivity.this);
 
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_todo);
@@ -155,27 +174,77 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.action_delete_all:
+                final AlertDialog.Builder delete = new AlertDialog.Builder(this);
+                delete.setMessage(R.string.delete_title).setTitle(R.string.warning_delete_all).setCancelable(false).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        noteViewModel.deleteAll();
+                        //Toast.makeText(MainActivity.this, R.string.toast_all_delete, Toast.LENGTH_SHORT).show();
+                        toasty.dangerToasty(MainActivity.this,"All notes deleted",Toasty.LENGTH_LONG,Toasty.BOTTOM);
+                    }
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-        if (id == R.id.action_delete_all) {
-            final AlertDialog.Builder delete = new AlertDialog.Builder(this);
-            delete.setMessage(R.string.delete_title).setTitle(R.string.warning_delete_all).setCancelable(false).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    noteViewModel.deleteAll();
-                    //Toast.makeText(MainActivity.this, R.string.toast_all_delete, Toast.LENGTH_SHORT).show();
-                    toasty.dangerToasty(MainActivity.this,"All notes deleted",Toasty.LENGTH_LONG,Toasty.BOTTOM);
-                }
-            }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                AlertDialog alertDialog = delete.create();
+                alertDialog.show();
+                return true;
 
-                }
-            });
-            AlertDialog alertDialog = delete.create();
-            alertDialog.show();
-            return true;
+            case R.id.action_about:
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                return true;
+
+            case R.id.action_share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Daily Notes - Super Simple Clean Note Taking App \n ");
+                startActivity(Intent.createChooser(shareIntent, "Send to your friend"));
+                return true;
+
+            case R.id.action_help:
+                showHelpDialog();
+                return true;
+
+            case R.id.action_report_bug:
+                links("https://github.com/pprathameshmore/DailyNotes/issues");
+                toasty.darkToasty(this, "Thank you for reporting bug! :) ", Toasty.LENGTH_LONG, Toasty.CENTER);
+                return true;
+
+            case R.id.action_privacy_policy:
+                links("https://github.com/pprathameshmore/DailyNotes/issues");
+                return true;
+
         }
+
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public void links(String link) {
+        Uri uriLink = Uri.parse(link);
+        Intent linkIntent = new Intent(Intent.ACTION_VIEW, uriLink);
+        startActivity(linkIntent);
+    }
+
+    private void showHelpDialog() {
+        ViewGroup viewGroup = findViewById(R.id.content);
+        View helpDialog = LayoutInflater.from(this).inflate(R.layout.alert_help, viewGroup, false);
+        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        helpBuilder.setView(helpDialog).setTitle("How to use?").setCancelable(true).setNeutralButton("Got it", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = helpBuilder.create();
+        alertDialog.show();
+
     }
 
     private void showDialog() {
@@ -208,6 +277,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     NoteViewModel noteViewModel = new NoteViewModel(getApplication());
                     noteViewModel.insert(new Note(title, currentDateTimeS, description, 1));
+                    toasty.successToasty(MainActivity.this,"Note saved", Toasty.LENGTH_LONG, Toasty.BOTTOM);
+
                 }
 
             }

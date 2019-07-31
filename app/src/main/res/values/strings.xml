@@ -1,10 +1,25 @@
 <resources>
+
+    <string name="app_id">ca-app-pub-9370043571819984~8956283764</string>
+    <string name="unit_id">ca-app-pub-9370043571819984/8381568698</string>
+
     <string name="app_name">Daily Notes</string>
     <string name="toast_delete">Deleted</string>
+    <string name="help_text">1. Swipe Right or Left to delete note "\n"2. Tap on the existing note to edit"\n"3. To add new note click Floating Action Button"\n"4. To delete all notes click Delete All option in the menu</string>
+    
+    <string name="about_me">Developed and Designed By Prathamesh More</string>
+    <string name="version">Version</string>
+    <string name="help">Build with the help of the Open Source Libraries</string>
+    <string name="android_jetpack">Android Jetpack is a suite of libraries, tools, and guidance to help developers write high-quality apps easier. These components help you follow best practices, free you from writing boilerplate code, and simplify complex tasks, so you can focus on the code you care about.</string>
+    <string name="libraries">Room - The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite."\n"Toasty - Lightweight Android library for a new way to create toasts in Android, similar to Bootstrap alerts.</string>
     <string name="toast_all_delete">All notes deleted</string>
     <string name="action_settings">Dark Theme (Coming)</string>
     <string name="action_delete_all">Delete All</string>
     <string name="action_about">About</string>
+    <string name="action_share">Tell Your Friend</string>
+    <string name="action_help">Help</string>
+    <string name="action_privacy_policy">Privacy Policy</string>
+    <string name="action_report_bug">Report Bug</string>
     <string name="toast_note_updated">Note updated</string>
     <string name="toast_no_changes">No changes</string>
     <string name="warning_delete">Delete?</string>
@@ -19,5 +34,13 @@
     <string name="yes">Yes</string>
     <string name="save_btn">Save</string>
     <string name="cancel_btn">Cancel</string>
+    <string name="btn_github">Fork on GitHub</string>
+    <string name="btn_toasty">Toasty</string>
+    <string name="btn_jetpack">JetPack</string>
+    <string name="ads">Why do so many apps have ads? "\n" I am indie app developer. I need to earn money through my free Apps, so I put ads in the Apps so that I could earn little from the ads. So in order to generate revenue I put Ads in my Apps</string>
     <string name="sample_description">This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news. This is a sample text for the content of this news that will be replaced with the original text for every news.</string>
+    <string name="mit_license">Copyright 2019 Prathamesh More"\n""\n"Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software."\n"
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
 </resources>

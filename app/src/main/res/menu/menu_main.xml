@@ -14,6 +14,32 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_share"
+        android:title="@string/action_share"
+        app:showAsAction="never"
+    />
+
+    <item
+        android:id="@+id/action_help"
+        android:title="@string/action_help"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/action_report_bug"
+        android:title="@string/action_report_bug"
+        app:showAsAction="never">
+
+    </item>
+
+    <item
+        android:title="@string/action_privacy_policy"
+        android:id="@+id/action_privacy_policy"
+        app:showAsAction="never">
+
+    </item>
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         app:showAsAction="never" />
