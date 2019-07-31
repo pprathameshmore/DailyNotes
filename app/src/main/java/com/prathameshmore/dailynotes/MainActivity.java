@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_privacy_policy:
-                links("https://github.com/pprathameshmore/DailyNotes/issues");
+                links("https://github.com/pprathameshmore/DailyNotes/blob/master/privacy_policy.md");
                 return true;
 
         }
