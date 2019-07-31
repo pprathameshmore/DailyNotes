@@ -1,4 +1,4 @@
-# ![icon](assets\icon\icon.png)
+![icon](assets/icon/icon.png)
 
 # Daily Notes
 
@@ -8,17 +8,17 @@
 #### Quickly capture what’s on your mind. Daily Notes makes it easy to save a thought or list for yourself. Capture what’s on your mind.
 
 # Download
-![en_badge_web_generic](F:\Project\DailyNotes\assets\icon\en_badge_web_generic.png)
+![en_badge_web_generic](assets/icon/g.png)
 
 # Screenshots
 
-![home_framed](F:\Project\DailyNotes\assets\screenshots\home_framed.png){:height="100px" width="100px"}
+![home_framed](assets/screenshots/home_framed.png){:height="100px" width="100px"}
 
-![add_framed](F:\Project\DailyNotes\assets\screenshots\add_framed.png)
+![add_framed](assets/screenshots/add_framed.png)
 
-![menu_framed](F:\Project\DailyNotes\assets\screenshots\menu_framed.png)
+![menu_framed](assets/screenshots/menu_framed.png)
 
-![sct1](F:\Project\DailyNotes\assets\screenshots\sct1.png)
+![sct1](assets/screenshots/sct1.png)
 
-![sct2](F:\Project\DailyNotes\assets\screenshots\sct2.png)
+![sct2](assets/screenshots/sct2.png)
 
