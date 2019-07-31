@@ -1,4 +1,4 @@
-# ![icon](F:\Project\DailyNotes\assets\icon\icon.png)
+# ![icon](\assets\icon\icon.png)
 
 # Daily Notes
 
