@@ -70,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         MobileAds.initialize(this, "ca-app-pub-9370043571819984~8956283764");
         adView = findViewById(R.id.adView);
-        adView.setAdUnitId("ca-app-pub-9370043571819984/8381568698");
-
-
+        //adView.setAdUnitId("ca-app-pub-9370043571819984/8381568698");
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
