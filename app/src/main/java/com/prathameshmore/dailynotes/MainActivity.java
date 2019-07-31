@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.prathameshmore.dailynotes.models.Note;
+import com.prathameshmore.toastylibrary.Toasty;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +33,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private NoteViewModel noteViewModel;
     private Vibrator vibrator;
     private AlertDialog.Builder deleteBuilder;
+    private Toasty toasty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        toasty = new Toasty(this);
         deleteBuilder = new AlertDialog.Builder(MainActivity.this);
 
         final RecyclerView recyclerView = findViewById(R.id.recycler_view_todo);
@@ -60,9 +67,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+
+
         noteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
+                Collections.sort(notes, new Comparator<Note>() {
+                    @Override
+                    public int compare(Note note, Note t1) {
+                        return note.getId() > t1.getId() ?  -1  : (note.getId() < t1.getId()) ? 1 : 0;
+                    }
+                });
                 adapter.setNotes(notes);
             }
         });
@@ -80,12 +95,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         noteViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
-                        Toast.makeText(MainActivity.this, R.string.toast_delete, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, R.string.toast_delete, Toast.LENGTH_SHORT).show();
+                        toasty.dangerToasty(MainActivity.this,"Note deleted",Toasty.LENGTH_LONG,Toasty.BOTTOM);
                     }
                 }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MainActivity.this, R.string.cancel_btn, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, R.string.cancel_btn, Toast.LENGTH_SHORT).show();
+
+                        toasty.infoToasty(MainActivity.this,"Cancel",Toasty.LENGTH_LONG,Toasty.BOTTOM);
                     }
                 });
 
@@ -144,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     noteViewModel.deleteAll();
-                    Toast.makeText(MainActivity.this, R.string.toast_all_delete, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, R.string.toast_all_delete, Toast.LENGTH_SHORT).show();
+                    toasty.dangerToasty(MainActivity.this,"All notes deleted",Toasty.LENGTH_LONG,Toasty.BOTTOM);
                 }
             }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                 @Override
@@ -180,19 +199,23 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "Save", Toast.LENGTH_SHORT).show();
                 title = inputEditTextTitle.getText().toString().trim();
                 description = inputEditTextDescription.getText().toString().trim();
+                String currentDateTimeS = DateFormat.getDateTimeInstance().format(new Date());
 
                 if (title.trim().isEmpty() || description.trim().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Enter required fields", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Blank", Toast.LENGTH_SHORT).show();
+                    showDialog();
+                    toasty.warningToasty(MainActivity.this,"Enter required fields", Toasty.LENGTH_LONG, Toasty.BOTTOM);
                 } else {
                     NoteViewModel noteViewModel = new NoteViewModel(getApplication());
-                    noteViewModel.insert(new Note(title, "1", description, 1));
+                    noteViewModel.insert(new Note(title, currentDateTimeS, description, 1));
                 }
 
             }
         }).setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(MainActivity.this, R.string.note_discarded, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, R.string.note_discarded, Toast.LENGTH_SHORT).show();
+                toasty.infoToasty(MainActivity.this,"Note discarded",Toasty.LENGTH_LONG,Toasty.BOTTOM);
                 dialogInterface.dismiss();
             }
         });
@@ -224,27 +247,31 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "Save", Toast.LENGTH_SHORT).show();
                 title = inputEditTextTitle.getText().toString().trim();
                 description = inputEditTextDescription.getText().toString().trim();
+                String currentDateTimeS = DateFormat.getDateTimeInstance().format(new Date());
 
                 if (title.trim().isEmpty() || description.trim().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Enter required fields", Toast.LENGTH_SHORT).show();
+                    showDialog();
                 } else {
                     NoteViewModel noteViewModel = new NoteViewModel(getApplication());
-                    Note note = new Note(title, "1",description,1);
+                    Note note = new Note(title, currentDateTimeS,description,1);
                     note.setId(id);
                     noteViewModel.update(note);
-                    Toast.makeText(MainActivity.this, R.string.toast_note_updated, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, R.string.toast_note_updated, Toast.LENGTH_SHORT).show();
+                    toasty.successToasty(MainActivity.this,"Note updated", Toasty.LENGTH_LONG, Toasty.BOTTOM);
                 }
 
             }
         }).setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(MainActivity.this, R.string.toast_no_changes, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, R.string.toast_no_changes, Toast.LENGTH_SHORT).show();
+                toasty.infoToasty(MainActivity.this,"No changes",Toasty.LENGTH_LONG,Toasty.BOTTOM);
                 dialogInterface.dismiss();
             }
         });
         alertBuilder.setCancelable(false);
         AlertDialog alertDialog = alertBuilder.create();
+        alertBuilder.setTitle("Add new note");
         alertDialog.show();
     }
 }
