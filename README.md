@@ -1,4 +1,4 @@
-![icon](assets/icon/icon.png)
+<img src="assets/icon/icon.png" width=100px height=100px />
 
 # Daily Notes
 
@@ -8,17 +8,14 @@
 #### Quickly capture what’s on your mind. Daily Notes makes it easy to save a thought or list for yourself. Capture what’s on your mind.
 
 # Download
-![en_badge_web_generic](assets/icon/g.png)
+<a href="https://play.google.com/store/apps/details?id=com.prathameshmore.dailynotes"/>
+<img src="assets/icon/g.png" width=200px height=80px />
 
 # Screenshots
+|   |   |
+|---|---|
+|<img src="assets/screenshots/home_framed.png" width=450px height=800px />|<img src="assets/screenshots/add_framed.png" width=450px height=800px />|
+| <img src="assets/screenshots/home_framed.png" width=450px height=800px />  |
 
-![home_framed](assets/screenshots/home_framed.png){:height="100px" width="100px"}
 
-![add_framed](assets/screenshots/add_framed.png)
-
-![menu_framed](assets/screenshots/menu_framed.png)
-
-![sct1](assets/screenshots/sct1.png)
-
-![sct2](assets/screenshots/sct2.png)
 
