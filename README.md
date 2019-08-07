@@ -15,7 +15,7 @@
 |   |   |
 |---|---|
 |<img src="assets/screenshots/home_framed.png" width=450px height=800px />|<img src="assets/screenshots/add_framed.png" width=450px height=800px />|
-| <img src="assets/screenshots/home_framed.png" width=450px height=800px />  |
+| <img src="assets/screenshots/menu_framed.png" width=450px height=800px />  |
 
 
 
